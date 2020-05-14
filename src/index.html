@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ImageProcessing</title>
+  <link rel="stylesheet" href="./index.css">
+
+  <script type="text/javascript" async src="./libs/opencv.js" onload="onOpenCvReady()"></script>
+</head>
+
+<body>
+  <h2>OpenCV.js Trial</h2>
+  <p id="status">OpenCV.js is loading...</p>
+  <div>
+    <div class="inputoutput">
+      <img id="imageSrc" alt="No Image" width="300" onload="imageSrc_onLoad()"/>
+      <p class="caption">imageSrc 
+        <input type="file" id="fileInput" name="file"/>
+      </div>
+    </div>
+    <div class="inputoutput">
+      <canvas id="canvasOutputStatic" width="300"></canvas>
+      <p class="caption">canvasOutput</div>
+    </div>
+  </div>
+
+  <div id="container">
+    <video autoplay="true" class="videoElement" id="videoInput">
+    </video>
+
+    <button id="Btn_preview" onclick="video_onLoad()">Turn On</button>
+
+    <canvas class="videoElement" id="canvasOutput" > </canvas>
+  </div>
+ 
+  <!-- If you need to call controls, you need to place the script inside body scope -->
+  <script type="text/javascript" src="./index.js" onload="window_onLoad()"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-5.0.4.js" type="text/javascript"></script>
+  <script src="./libs/utils.js" type="text/javascript"></script>
+  
+
+  </body>
+</html>
