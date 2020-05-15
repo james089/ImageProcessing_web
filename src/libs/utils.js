@@ -1,8 +1,8 @@
-function Utils(errorOutputId) { // eslint-disable-line no-unused-vars
+function Utils(errorOutputId, opencv_url) { // eslint-disable-line no-unused-vars
     let self = this;
     this.errorOutput = document.getElementById(errorOutputId);
 
-    const OPENCV_URL = '../libs/opencv.js';
+    let OPENCV_URL = opencv_url;
     this.loadOpenCv = function(onloadCallback) {
         let script = document.createElement('script');
         script.setAttribute('async', '');

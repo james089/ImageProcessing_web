@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ImageProcessing</title>
+  <link rel="stylesheet" href="../index.css">
+
+  <script type="text/javascript" async src="../libs/opencv.js" onload="onOpenCvReady()"></script>
+
+</head>
+
+<body onload="window_onLoad()">
+  <h2>OpenCV.js Static Image</h2>
+  <p id="status">OpenCV.js is loading...</p>
+  <div>
+    <div class="inputoutput">
+      <img id="imageSrc" alt="No Image" width="300" onload="imageSrc_onLoad()"/>
+      <p class="caption">imageSrc 
+        <input type="file" id="fileInput" name="file"/>
+      </div>
+    </div>
+    <div class="inputoutput">
+      <canvas id="canvasOutputStatic" width="300"></canvas>
+      <p class="caption">canvasOutput</div>
+    </div>
+  </div>
+
+  <!-- If you need to call controls, you need to place the script inside body scope -->  
+  <script>
+    function onOpenCvReady() {
+    document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+  }
+
+  function window_onLoad(){
+      let imgElement = document.getElementById('imageSrc');
+      let inputElement = document.getElementById('fileInput');
+      inputElement.addEventListener('change', (e) => {
+      imgElement.src = URL.createObjectURL(e.target.files[0]);
+      }, false);
+  }
+
+  function imageSrc_onLoad(){
+      try 
+      {
+        let imgElement = document.getElementById('imageSrc');
+        //let imgOriginal = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+        let imgOriginal = cv.imread(imgElement);
+        let imgProcessed = contourDetection(imgOriginal);
+        cv.imshow('canvasOutputStatic', imgProcessed);
+      } 
+      catch (err) 
+      {
+        status.innerHTML = err;
+      }
+      imgOriginal.delete();
+      imgProcessed.delete();
+  }
+
+  function makeGray(imgOriginal)
+  {
+      let dst = new cv.Mat();
+      cv.cvtColor(imgOriginal, dst, cv.COLOR_RGBA2GRAY, 0);
+      return dst;
+  }
+
+  function contourDetection(src)
+{
+    let dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8UC1);
+    cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
+    cv.threshold(src, src, 177, 200, cv.THRESH_BINARY);
+    let contours = new cv.MatVector();
+    let hierarchy = new cv.Mat();
+    cv.findContours(src, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
+    let cnt = contours.get(0);
+    let contoursColor = new cv.Scalar(255, 255, 255);
+    cv.drawContours(dst, contours, 0, contoursColor, 1, 8, hierarchy, 100);
+    return dst;
+}
+  </script>
+
+  
+  </body>
+</html>

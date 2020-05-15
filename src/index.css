@@ -58,7 +58,6 @@ button[disabled] {
   font-size: 13px;
   min-height: 13px;
   line-height: 1.0;
-  text-wrap: unrestricted;
   padding-bottom: 0px;
   margin: 0px;
 }
@@ -68,6 +67,3 @@ button[disabled] {
 .small {
   max-width: 300px;
 }
-×
-Drag and Drop
-The image will be downloaded
